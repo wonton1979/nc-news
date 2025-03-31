@@ -11,3 +11,12 @@ export const getAllArticles = () => {
 export const getArticleById = (article_id) => {
     return  api.get(`/articles/${article_id}`)
 }
+
+export const getAllArticleComments = (article_id) => {
+    return  api.get(`/articles/${article_id}/comments`)
+}
+
+export const getArticlesByPage= (page) => {
+    return  api.get(`/articles?limit=8&p=${page}`)
+}
+
