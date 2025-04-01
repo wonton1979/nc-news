@@ -45,9 +45,10 @@ export default function ListOfArticles() {
                 <div className="list-of-articles grid sm:grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mr-3">
                     {articleList.map((article) => (
                         <ArticleSummary key={article.article_id} article={article} />
-                    ))}
+                    ))
+                    }
                 </div>
-                <div className="pagination-bar flex justify-center mt-8">
+                <div className={`pagination-bar flex justify-center mt-8`}>
                     <ul className="pagination flex flex-wrap justify-center items-center">
                         {pageNumbers.map((pageNumber) => (
                             <li key={pageNumber} className={`font-bold text-1xl 
@@ -56,7 +57,6 @@ export default function ListOfArticles() {
                         ))}
                     </ul>
                 </div>
-
             </>
         )
     }

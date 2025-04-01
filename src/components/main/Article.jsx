@@ -10,6 +10,8 @@ export default function Article() {
     const {article_id} = useParams();
     const isFishedLoading = useRef(false);
     let createdAt = "";
+    let isLike = false;
+    let isUnlike = false;
     useEffect(() => {
         if (isFishedLoading.current) return;
         getArticleById(article_id).then(({data}) => {
@@ -19,6 +21,9 @@ export default function Article() {
     }, [article_id,article]);
     if(isFishedLoading.current){
         createdAt = article.created_at.slice(0, 10) + " " + article.created_at.slice(11, 19);
+    }
+    function likeVote(){
+        isLike = true;
     }
     return (
         <div className="article ml-8 md:flex justify-center mb-8">
@@ -36,7 +41,11 @@ export default function Article() {
                     <p className="text-sm my-3 text-black dark:text-white font-bold">Current Votes : {article.votes}</p>
                 </div>
                 <div className="flex flex-row">
-                    <img className="mx-5" src={like} alt="article like button"/>
+                    <span className={`font-bold ml-6 like ${!isLike ? "hidden" : ""}`} >+1</span>
+                    <span className="font-bold ml-11 dislike hidden">-1</span>
+                </div>
+                <div className="flex flex-row">
+                    <img className="mx-5 cursor-pointer" src={like} alt="article like button" onClick={likeVote}/>
                     <img className="mt-[4px]" src={dislike} alt="article like button"/>
                 </div>
             </div>
