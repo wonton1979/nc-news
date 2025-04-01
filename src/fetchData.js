@@ -20,3 +20,7 @@ export const getArticlesByPage= (page) => {
     return  api.get(`/articles?limit=8&p=${page}`)
 }
 
+export const patchArticleVotes = (article_id,inc_votes) => {
+    return  api.patch(`/articles/${article_id}`,{inc_votes:inc_votes})
+}
+

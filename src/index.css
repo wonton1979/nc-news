@@ -2,8 +2,14 @@
 
 .like{
     animation: contentFadeIn, contentFadeOut;
-    animation-duration: 2s,2s;
-    animation-delay: 0s, 4s;
+    animation-duration: 0.5s,0.5s;
+    animation-delay: 0s, 1s;
+}
+
+.dislike{
+    animation: contentFadeIn, contentFadeOut;
+    animation-duration: 0.5s,0.5s;
+    animation-delay: 0s, 1s;
 }
 
 
