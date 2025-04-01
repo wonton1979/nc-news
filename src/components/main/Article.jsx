@@ -1,29 +1,73 @@
 import {useParams} from "react-router";
-import {getArticleById} from "../../fetchData.js";
+import {getArticleById,patchArticleVotes} from "../../fetchData.js";
 import {useEffect, useRef, useState} from "react";
 import ListOfComments from "./ListOfComments.jsx";
 import like from "../../assets/images/like-svg.svg"
 import dislike from "../../assets/images/dislike-svg.svg"
+import {useNetworkState} from "react-use";
 
 export default function Article() {
     const [article, setArticle] = useState({});
     const {article_id} = useParams();
     const isFishedLoading = useRef(false);
     let createdAt = "";
-    let isLike = false;
-    let isUnlike = false;
+    const [isLike, setIsLike] = useState(false);
+    const [isDislike, setIsDislike] = useState(false);
+    const [votesCount, setVotesCount] = useState(0);
+    const networkState = useNetworkState();
+
     useEffect(() => {
         if (isFishedLoading.current) return;
         getArticleById(article_id).then(({data}) => {
             setArticle(data.article[0]);
             isFishedLoading.current = true;
         })
-    }, [article_id,article]);
+    }, [article_id,article,votesCount]);
+
     if(isFishedLoading.current){
         createdAt = article.created_at.slice(0, 10) + " " + article.created_at.slice(11, 19);
     }
+
     function likeVote(){
-        isLike = true;
+        if(networkState.online){
+            setIsLike(true)
+            setTimeout(()=>{
+                setIsLike(false)
+                patchArticleVotes(article_id,1).then(() => {
+                    setVotesCount(votesCount+1)
+                    isFishedLoading.current = false;
+                })
+            },1500)
+        }
+        else {
+            setIsLike(true)
+            setIsDislike(true);
+            setTimeout(()=>{
+                setIsLike(false)
+                setIsDislike(false);
+            },1500)
+        }
+
+    }
+    function dislikeVote(){
+        if(networkState.online){
+            setIsDislike(true);
+            setTimeout(()=>{
+                setIsDislike(false)
+                patchArticleVotes(article_id,-1).then(({data}) => {
+                    setVotesCount(votesCount-1)
+                    isFishedLoading.current = false;
+                })
+            },1500)
+        }
+       else{
+            setIsLike(true)
+            setIsDislike(true);
+            setTimeout(()=>{
+                setIsLike(false)
+                setIsDislike(false);
+            },1500)
+        }
     }
     return (
         <div className="article ml-8 md:flex justify-center mb-8">
@@ -41,12 +85,15 @@ export default function Article() {
                     <p className="text-sm my-3 text-black dark:text-white font-bold">Current Votes : {article.votes}</p>
                 </div>
                 <div className="flex flex-row">
-                    <span className={`font-bold ml-6 like ${!isLike ? "hidden" : ""}`} >+1</span>
-                    <span className="font-bold ml-11 dislike hidden">-1</span>
+                    <span className={`font-bold ml-7 like ${!isLike ? "hidden" : ""}`} >+1</span>
+                    <span className={`font-bold ${networkState.online ? "ml-22" : "ml-12"} dislike ${!isDislike ? "hidden" : ""}`}>-1</span>
                 </div>
                 <div className="flex flex-row">
                     <img className="mx-5 cursor-pointer" src={like} alt="article like button" onClick={likeVote}/>
-                    <img className="mt-[4px]" src={dislike} alt="article like button"/>
+                    <img className="mt-[4px] cursor-pointer" src={dislike} alt="article like button" onClick={dislikeVote}/>
+                </div>
+                <div className={`disconnect-error-message font-bold text-red-700 p-5 ${networkState.online ? "hidden" : ""}`}>
+                    <p>You've lost connection,Your vote will not count until you're back online.</p>
                 </div>
             </div>
             <ListOfComments articleID={article_id}/>
