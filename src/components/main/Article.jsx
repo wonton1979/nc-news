@@ -5,6 +5,7 @@ import ListOfComments from "./ListOfComments.jsx";
 import like from "../../assets/images/like-svg.svg"
 import dislike from "../../assets/images/dislike-svg.svg"
 import {useNetworkState} from "react-use";
+import NewComment from "./NewComment.jsx";
 
 export default function Article() {
     const [article, setArticle] = useState({});
@@ -69,6 +70,9 @@ export default function Article() {
             },1500)
         }
     }
+
+
+
     return (
         <div className="article ml-8 md:flex justify-center mb-8">
             <div
@@ -95,6 +99,7 @@ export default function Article() {
                 <div className={`disconnect-error-message font-bold text-red-700 p-5 ${networkState.online ? "hidden" : ""}`}>
                     <p>You've lost connection,Your vote will not count until you're back online.</p>
                 </div>
+                <NewComment articleID={article_id}/>
             </div>
             <ListOfComments articleID={article_id}/>
         </div>
