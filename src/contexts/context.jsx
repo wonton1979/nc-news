@@ -1,13 +1,6 @@
-import {createContext, useState} from "react";
+import {createContext} from "react";
 
-export const ArticleContext = createContext(undefined)
+export const PostCommentStateContext = createContext(undefined)
 
-export const ArticleIdProvider = ({ children }) => {
-    const [articleId, setArticleId] = useState(null)
-    return (
-        <ArticleContext.Provider value={{articleId,setArticleId}}>
-            {children}
-        </ArticleContext.Provider>
-    );
-};
+
 

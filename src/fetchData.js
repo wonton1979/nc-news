@@ -24,3 +24,10 @@ export const patchArticleVotes = (article_id,inc_votes) => {
     return  api.patch(`/articles/${article_id}`,{inc_votes:inc_votes})
 }
 
+export const getAllUsers = () => {
+    return  api.get('/users')
+}
+
+export const postNewComment = (article_id,username,body) => {
+    return api.post(`/articles/${article_id}/comments`,{username:username,body:body})
+}

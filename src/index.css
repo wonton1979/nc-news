@@ -12,6 +12,11 @@
     animation-delay: 0s, 1s;
 }
 
+.success-message{
+    animation: contentFadeOut;
+    animation-duration: 1s;
+    animation-delay: 3s;
+}
 
 @keyframes contentFadeOut {
     0%{
