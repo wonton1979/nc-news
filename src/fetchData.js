@@ -31,3 +31,7 @@ export const getAllUsers = () => {
 export const postNewComment = (article_id,username,body) => {
     return api.post(`/articles/${article_id}/comments`,{username:username,body:body})
 }
+
+export const deleteComment = (comment_id) => {
+    return  api.delete(`/comments/${comment_id}`)
+}

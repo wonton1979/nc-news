@@ -1,16 +1,19 @@
 import {getAllArticles} from "../../fetchData.js";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ArticleSummary from "./ArticleSummary.jsx";
 import Lottie from "lottie-react";
 import LoadingAnimation from "../../assets/images/Loading-Animation.json";
 import {getArticlesByPage} from "../../fetchData.js";
+import {CurrentPageContext} from "../../contexts/context.jsx";
 
 export default function ListOfArticles() {
     const [articleList, setArticleList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [pages, setPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const {setActivePage} = useContext(CurrentPageContext);
     useEffect(() => {
+        setActivePage("home");
         getAllArticles().then(({data:{articles}}) => {
             setPages(Math.ceil(articles.length/8));
             getArticlesByPage(1).then(({data:{articles}}) => {
