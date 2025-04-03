@@ -7,10 +7,16 @@ export default function ArticleSummary({article}) {
             <Link to={`/articles/${article.article_id}`}>
                 <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-md shadow-md hover:bg-gray-100
                 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-full">
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <h6 className="text-xl mt-2 font-bold tracking-tight text-gray-900 dark:text-white">{article.title}</h6>
-                        <p className="font-normal text-gray-700 dark:text-gray-400">Topic : {article.topic}</p>
-                        <p className="font-normal text-gray-700 dark:text-gray-400">Author : {article.author}</p>
+                        <div className="flex">
+                            <p className="font-normal text-gray-700 dark:text-gray-400 mr-5">Topic : {article.topic}</p>
+                            <p className="font-normal text-gray-700 dark:text-gray-400">Author : {article.author}</p>
+                        </div>
+                        <div className="flex">
+                            <p className="font-normal text-gray-700 dark:text-gray-400 mr-5">Comment Count : {article.comment_count}</p>
+                            <p className="font-normal text-gray-700 dark:text-gray-400">Votes : {article.votes}</p>
+                        </div>
                         <p className="font-normal text-gray-700 dark:text-gray-400">Created At : {createdAt}</p>
                     </div>
                 </div>
