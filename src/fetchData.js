@@ -35,3 +35,11 @@ export const postNewComment = (article_id,username,body) => {
 export const deleteComment = (comment_id) => {
     return  api.delete(`/comments/${comment_id}`)
 }
+
+export const getArticlesByQuery = (topic) => {
+    return  api.get(`/articles?topic=${topic}`)
+}
+
+export const getArticlesByQueryByPage = (topic,page) => {
+    return  api.get(`/articles?topic=${topic}&limit=8&p=${page}`)
+}
