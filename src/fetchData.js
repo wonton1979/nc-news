@@ -36,10 +36,18 @@ export const deleteComment = (comment_id) => {
     return  api.delete(`/comments/${comment_id}`)
 }
 
-export const getArticlesByQuery = (topic) => {
-    return  api.get(`/articles?topic=${topic}`)
+export const getArticlesByQueryTopic = (topic_sort_by) => {
+    return  api.get(`/articles${topic_sort_by}`)
 }
 
-export const getArticlesByQueryByPage = (topic,page) => {
-    return  api.get(`/articles?topic=${topic}&limit=8&p=${page}`)
+export const getArticlesByQueryByPageTopic = (topic_sort_by, page) => {
+    return  api.get(`/articles${topic_sort_by}&limit=8&p=${page}`)
+}
+
+export const getArticlesSortBy = (sort_by) => {
+    return  api.get(`/articles${sort_by}`)
+}
+
+export const getArticlesSortByByPage = (sort_by, page) => {
+    return  api.get(`/articles${sort_by}&limit=8&p=${page}`)
 }
