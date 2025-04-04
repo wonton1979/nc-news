@@ -1,12 +1,58 @@
-# React + Vite
+# Northcoders News – Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **Northcoders News**, a Reddit-style article and comment platform built using React.This is the front-end solo project for the full-stack NC News app, built during my time at the [Northcoders](https://northcoders.com/) Software Engineering Bootcamp.
 
-Currently, two official plugins are available:
+**Live Site:**  
+[https://nc-news-yguan.netlify.app](https://nc-news-yguan.netlify.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Back-End Repo:**  
+[https://github.com/wonton1979/nc-news](https://github.com/wonton1979/nc-news)
 
-## Expanding the ESLint configuration
+**Front-End Repo:**  
+[https://github.com/wonton1979/nc-news-api](https://github.com/wonton1979/nc-news-api)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- Browse a list of articles, filterable by topic and sort order
+- View full article details with voting and comments
+- View articles by selecting the topic user interest in
+- Post and delete your own comments
+- Paginated article list
+- Responsive design for all screen sizes
+- User page with user-specific data
+
+---
+
+## Tech Stack
+
+- **React** with Vite
+- **React Router**
+- **Tailwind CSS** for styling
+- **Axios** for API requests
+- **Node.js** & Express (back-end)
+
+---
+
+## Run This Project Locally
+1.**Clone this repo**
+```bash
+git clone https://github.com/wonton1979/nc-news-api.git
+```
+2.**Install dependencies**
+```bash
+npm install
+```
+3.**Start the app**
+```bash
+npm run dev
+```
+
+---
+
+## Minimum Node Version
+
+You’ll need **Node.js v18+**  
+
+
