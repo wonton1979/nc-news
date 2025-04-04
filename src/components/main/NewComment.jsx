@@ -1,6 +1,6 @@
 import {getAllUsers,postNewComment} from "../../fetchData.js";
 import {useContext, useState} from "react";
-import {PostCommentStateContext} from "../../contexts/context.jsx";
+import {PostCommentStateContext,UsernameContext} from "../../contexts/context.jsx";
 
 export default function NewComment({articleID}) {
     const [username, setUsername] = useState("");
@@ -8,6 +8,7 @@ export default function NewComment({articleID}) {
     const [comment, setComment] = useState("");
     const {isPostSuccess,setIsPostSuccess} = useContext(PostCommentStateContext);
     const [submitted, setSubmitted] = useState(false);
+    const {defaultUsername} = useContext(UsernameContext);
 
     function insertNewComment(event) {
         event.preventDefault();
@@ -36,11 +37,11 @@ export default function NewComment({articleID}) {
             <form onSubmit={insertNewComment} className="max-w-sm mx-auto">
                 <div className="mb-5">
                     <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                    <input type="text" value={username} id="username" className="shadow-xs bg-gray-50 border border-gray-300
+                    <input type="text" value={defaultUsername} id="username" className="shadow-xs bg-gray-50 border border-gray-300
                              text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block
                              w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                              dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-                             dark:shadow-xs-light" maxLength={18} onChange={(event)=>{setUsername(event.target.value)}} required/>
+                             dark:shadow-xs-light disabled:true" maxLength={18} onChange={(event)=>{setUsername(event.target.value)}} required/>
                 </div>
                 <div className={`username-error my-5 text-red-700 dark:text-white ${ !submitted ? "hidden" : (isUsernameExists ? "hidden" : "")}`}>
                     <p>Username does not exist, You must be a registered user to post your comment.</p>

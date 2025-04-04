@@ -9,6 +9,7 @@ import ArticleSummary from "./ArticleSummary.jsx";
 import Lottie from "lottie-react";
 import LoadingAnimation from "../../assets/images/Loading-Animation.json";
 import {CurrentPageContext} from "../../contexts/context.jsx";
+import Error from "./Error.jsx";
 
 export default function ListOfArticles() {
     const [articleList, setArticleList] = useState([]);
@@ -21,6 +22,9 @@ export default function ListOfArticles() {
     const [filterSelected, setFilterSelected] = useState("");
     const [filterSearchPath, setFilterSearchPath] = useState("");
     const [orderBy, setOrderBy] = useState("DESC");
+    const [isNotFound, setIsNotFound] = useState(false);
+    const [isBadRequest, setIsBadRequest] = useState(false);
+    const [isEmptyContent, setIsEmptyContent] = useState(false);
 
     function handleFilterButton(){
         setFilterButtonClickCount(filterButtonClickCount + 1);
@@ -49,8 +53,25 @@ export default function ListOfArticles() {
                 setPages(Math.ceil(articles.length/8));
                 getArticlesByPage(1).then(({data:{articles}}) => {
                     setArticleList(articles);
+                    if(articles.length === 0){
+                        setIsEmptyContent(true);
+                    }
+                }).catch((err) => {
+                    if(err.status === 404){
+                        setIsNotFound(true);
+                    }
+                    if(err.status === 400){
+                        setIsBadRequest(true);
+                    }
                 });
                 setLoading(false);
+            }).catch((err) => {
+                if(err.status === 404){
+                    setIsNotFound(true);
+                }
+                if(err.status === 400){
+                    setIsBadRequest(true);
+                }
             })
         }
         else{
@@ -58,12 +79,42 @@ export default function ListOfArticles() {
                 setPages(Math.ceil(articles.length/8));
                 getArticlesSortByByPage(filterSearchPath,1).then(({data:{articles}}) => {
                     setArticleList(articles);
+                    if(articles.length === 0){
+                        setIsEmptyContent(true);
+                    }
+                }).catch((err) => {
+                    if(err.status === 404){
+                        setIsNotFound(true);
+                    }
+                    if(err.status === 400){
+                        setIsBadRequest(true);
+                    }
                 });
                 setLoading(false);
+            }).catch((err) => {
+                if(err.status === 404){
+                    setIsNotFound(true);
+                }
+                if(err.status === 400){
+                    setIsBadRequest(true);
+                }
             })
         }
 
     }, [pages,filterSearchPath]);
+
+    if(isEmptyContent){
+        return (<Error error={0} />);
+    }
+
+    if(isNotFound){
+        return (<Error error={404} />);
+    }
+
+    if(isBadRequest){
+        return (<Error error={400} />);
+    }
+
     if (loading) {
        return (
            <div className="fixed inset-0 z-50 bg-white">
@@ -93,7 +144,7 @@ export default function ListOfArticles() {
                 });
             }
         }
-        return (
+        return(
             <>
                 <div className="relative flex justify-end items-center text-left mr-7">
                     <div className="flex justify-center items-center bg-white">

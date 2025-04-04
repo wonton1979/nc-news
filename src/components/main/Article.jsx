@@ -6,6 +6,7 @@ import like from "../../assets/images/like-svg.svg"
 import dislike from "../../assets/images/dislike-svg.svg"
 import {useNetworkState} from "react-use";
 import NewComment from "./NewComment.jsx";
+import Error from "./Error.jsx";
 
 export default function Article() {
     const [article, setArticle] = useState({});
@@ -16,12 +17,25 @@ export default function Article() {
     const [isDislike, setIsDislike] = useState(false);
     const [votesCount, setVotesCount] = useState(0);
     const networkState = useNetworkState();
+    const [isEmptyContent, setIsEmptyContent] = useState(false);
+    const [isNotFound, setIsNotFound] = useState(false);
+    const [isBadRequest, setIsBadRequest] = useState(false);
 
     useEffect(() => {
         if (isFishedLoading.current) return;
         getArticleById(article_id).then(({data}) => {
             setArticle(data.article[0]);
+            if(data.article.length === 0){
+                setIsEmptyContent(true);
+            }
             isFishedLoading.current = true;
+        }).catch((err) => {
+            if(err.status === 404){
+                setIsNotFound(true);
+            }
+            if(err.status === 400){
+                setIsBadRequest(true);
+            }
         })
     }, [article_id,article,votesCount]);
 
@@ -37,6 +51,13 @@ export default function Article() {
                 patchArticleVotes(article_id,1).then(() => {
                     setVotesCount(votesCount+1)
                     isFishedLoading.current = false;
+                }).catch((err) => {
+                    if(err.status === 404){
+                        setIsNotFound(true);
+                    }
+                    if(err.status === 400){
+                        setIsBadRequest(true);
+                    }
                 })
             },1500)
         }
@@ -58,6 +79,13 @@ export default function Article() {
                 patchArticleVotes(article_id,-1).then(({data}) => {
                     setVotesCount(votesCount-1)
                     isFishedLoading.current = false;
+                }).catch((err) => {
+                    if(err.status === 404){
+                        setIsNotFound(true);
+                    }
+                    if(err.status === 400){
+                        setIsBadRequest(true);
+                    }
                 })
             },1500)
         }
@@ -71,8 +99,21 @@ export default function Article() {
         }
     }
 
+    if(isEmptyContent){
+        return (<Error error={0} />);
+    }
 
+    if(isNotFound){
+        return (<Error error={404} />);
+    }
 
+    if(isBadRequest){
+        return (<Error error={400} />);
+    }
+
+    if(isFishedLoading.current){
+        createdAt = article.created_at.slice(0, 10) + " " + article.created_at.slice(11, 19);
+    }
     return (
         <div className="article ml-8 md:flex justify-center mb-8">
             <div
