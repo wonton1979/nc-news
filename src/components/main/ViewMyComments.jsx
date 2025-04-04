@@ -4,6 +4,7 @@ import Lottie from "lottie-react";
 import LoadingAnimation from "../../assets/images/Loading-Animation.json";
 import {CurrentPageContext,UsernameContext} from "../../contexts/context.jsx";
 import ArticleComments from "./ArticleComments.jsx";
+import Error from "./Error.jsx";
 
 export default function ViewMyComments() {
     const [loading, setLoading] = useState(true);
@@ -12,6 +13,10 @@ export default function ViewMyComments() {
     const {defaultUsername} = useContext(UsernameContext);
     const isFishedLoading = useRef(false);
     const [refresh, setRefresh] = useState(0);
+    const [isNotFound, setIsNotFound] = useState(false);
+    const [isBadRequest, setIsBadRequest] = useState(false);
+
+
     useEffect(() => {
         if (isFishedLoading.current) return;
         setMyComments([])
@@ -40,8 +45,32 @@ export default function ViewMyComments() {
             })
             setLoading(false);
             isFishedLoading.current = true;
+        }).catch(err => {
+            if(err.status === 404){
+                setIsNotFound(true);
+            }
+            if(err.status === 400){
+                setIsBadRequest(true);
+            }
         })
     }, [refresh]);
+
+    if(myComments.length === 0){
+        return (
+            <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 font-bold text-2xl text-center gap-4 p-2 t">
+                <p className="mt-52">Sorry, But you haven't left any comments for articles !</p>
+            </div>
+        )
+    }
+
+    if(isNotFound){
+        return (<Error error={404} />);
+    }
+
+    if(isBadRequest){
+        return (<Error error={400} />);
+    }
+
     if (loading) {
         return (
             <div className="fixed inset-0 z-50 bg-white">

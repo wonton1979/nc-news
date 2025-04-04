@@ -6,6 +6,8 @@ import User from './components/main/User.jsx'
 import ViewMyComments from "./components/main/ViewMyComments.jsx";
 import TopicSelect from "./components/main/TopicSelect.jsx";
 import ArticlesBySort from "./components/main/ArticlesBySort.jsx";
+import Error from "./components/main/Error.jsx";
+
 
 function App() {
 
@@ -19,6 +21,7 @@ function App() {
             <Route path="/my-comments" element={<ViewMyComments />} />
             <Route path="/topics" element={<TopicSelect />} />
             <Route path="/articles/" element={<ArticlesBySort />} />
+            <Route path="*" element={<Error error={404} />} />
         </Routes>
     </>
   )
