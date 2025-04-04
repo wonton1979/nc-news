@@ -111,9 +111,6 @@ export default function Article() {
         return (<Error error={400} />);
     }
 
-    if(isFishedLoading.current){
-        createdAt = article.created_at.slice(0, 10) + " " + article.created_at.slice(11, 19);
-    }
     return (
         <div className="article ml-8 md:flex justify-center mb-8">
             <div

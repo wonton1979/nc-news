@@ -55,13 +55,6 @@ export default function ViewMyComments() {
         })
     }, [refresh]);
 
-    if(myComments.length === 0){
-        return (
-            <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 font-bold text-2xl text-center gap-4 p-2 t">
-                <p className="mt-52">Sorry, But you haven't left any comments for articles !</p>
-            </div>
-        )
-    }
 
     if(isNotFound){
         return (<Error error={404} />);
@@ -89,5 +82,16 @@ export default function ViewMyComments() {
             </div>
         )
     }
+
+    if(isFishedLoading.current){
+        if(myComments.length === 0){
+            return (
+                <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 font-bold text-2xl text-center gap-4 p-2 t">
+                    <p className="mt-52">Sorry, But you haven't left any comments for articles !</p>
+                </div>
+            )
+        }
+    }
+
 
 }

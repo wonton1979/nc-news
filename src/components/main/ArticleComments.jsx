@@ -8,6 +8,8 @@ export default function ArticleComments({myComments,setRefresh,isFishedLoading})
     const [deletingCommentId, setDeletingCommentId] = useState(false);
     const buttonRef = useRef(null);
     const [yPos, setYPos] = useState(null);
+
+
     function handleDelete(event){
         event.preventDefault();
         setIsButtonClicked(true);
@@ -29,6 +31,7 @@ export default function ArticleComments({myComments,setRefresh,isFishedLoading})
     function cancelDelete(){
         setIsButtonClicked(false);
     }
+
     return (
         <>
             <div className="article ml-8 md:flex justify-center mb-8 ">

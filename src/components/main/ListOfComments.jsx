@@ -41,6 +41,7 @@ export default function ListOfComments({articleID}){
     if(isBadRequest){
         return (<Error error={400} />);
     }
+
     if(isEmptyContent){
         return (
             <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 font-bold text-2xl text-center gap-4 p-2 t">
@@ -48,6 +49,7 @@ export default function ListOfComments({articleID}){
             </div>
         )
     }
+
     if (loading) {
         return (
             <div className="fixed inset-0 z-50 bg-white">
@@ -57,11 +59,15 @@ export default function ListOfComments({articleID}){
             </div>
         )
     }
-    return (
-        <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 grid grid-cols-1 lg:grid-cols-2 gap-4 p-2">
-            {comments.map((comment,index) => (
-                <Comment key={index} comment={comment} />
-            ))}
-        </div>
-    )
+
+    if(isFishedLoading.current){
+        return (
+            <div className="list-of-comments bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 grid grid-cols-1 lg:grid-cols-2 gap-4 p-2">
+                {comments.map((comment,index) => (
+                    <Comment key={index} comment={comment} />
+                ))}
+            </div>
+        )
+    }
+
 }
